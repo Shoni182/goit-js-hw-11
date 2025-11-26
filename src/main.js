@@ -1,4 +1,7 @@
 import './scss/main.scss';
+import './js/pixabay-api';
+import './js/render-functions';
+import SimpleLightbox from 'simplelightbox';
 
 // У файлі main.js напиши всю логіку роботи додатка.Виклики нотифікацій iziToast,
 //     усі перевірки на довжину масиву в отриманій відповіді робимо саме в цьому

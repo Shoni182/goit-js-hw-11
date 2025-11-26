@@ -29,3 +29,26 @@
   display: flex;
   gap: 4px;
 }
+
+.”gallery” {
+}
+.list-item {
+}
+.item-container {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  background-color: aquamarine;
+  width: 360px;
+  height: 200px;
+}
+
+.desc-container {
+  display: flex;
+  text-align: center;
+  gap: 28px;
+}
+.item-title span {
+  display: block;
+}
