@@ -1,9 +1,67 @@
-// // export/import.
-// import SimpleLightbox from 'simplelightbox';
-// createGallery(images). Ця функція повинна приймати масив images, створювати HTML-розмітку для галереї, додавати її в контейнер галереї та викликати метод екземпляра SimpleLightbox refresh(). Нічого не повертає.
+import SimpleLightbox from 'simplelightbox';
 
-// clearGallery(). Ця функція нічого не приймає та повинна очищати вміст контейнера галереї. Нічого не повертає.
+let refs = {
+  galleryElem: document.querySelector('.gallery'),
+};
+const { galleryElem } = refs;
 
-// showLoader(). Ця функція нічого не приймає, повинна додавати клас для відображення лоадера. Нічого не повертає.
+let loader = null;
 
-// hideLoader(). Ця функція нічого не приймає, повинна прибирати клас для відображення лоадера. Нічого не повертає.
+function imageTemplate({
+  webformatURL,
+  largeImageURL,
+  tags,
+  likes,
+  views,
+  comments,
+  downloads,
+}) {
+  let tagsText = tags.split(',').slice(0, 3);
+
+  return `
+  <li class="list-item">
+        <div class="item-container">
+        <a href="${largeImageURL}" class="">
+          <img src="${webformatURL}" alt="${tagsText}" class="item-img">
+          </a>
+          <div class="desc-container">
+            <p class="item-title">Likes <span item-num>${likes}</span></p>
+            <p class="item-title">Views <span item-num>${views}</span></p>
+            <p class="item-title">Comments <span item-num>${comments}</span></p>
+            <p class="item-title">Downloads <span item-num>${downloads}</span></p>
+          </div>
+        </div>
+      </li>`;
+}
+
+export function createGallery(images) {
+  const markup = images.map(imageTemplate).join('');
+  const lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionDelay: 250,
+    overlayOpacity: 0.85,
+  });
+  galleryElem.innerHTML = markup;
+  lightbox.refresh();
+  return markup;
+}
+
+export function clearGallery() {
+  galleryElem.innerHTML = '';
+}
+
+export function showLoader() {
+  if (!loader) {
+    const markup = `<div class="loader"></div>`;
+    galleryElem.insertAdjacentHTML('beforebegin', markup);
+    loader = document.querySelector('.loader');
+  }
+}
+
+export function hideLoader() {
+  if (loader) {
+    loader.remove();
+    loader = null;
+  }
+}
