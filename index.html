@@ -5,18 +5,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Main</title>
-  <script type="module" crossorigin src="/goit-js-hw-09/index.js"></script>
-  <link rel="stylesheet" crossorigin href="/goit-js-hw-09/assets/index-rphhjivs.css">
+  <script type="module" crossorigin src="/goit-js-hw-11/index.js"></script>
+  <link rel="modulepreload" crossorigin href="/goit-js-hw-11/assets/vendor-BeEWunMt.js">
+  <link rel="stylesheet" crossorigin href="/goit-js-hw-11/assets/index-K8clApE7.css">
 </head>
 
 <body>
   <main>
-    <form class="form">
-      <label>
-        <input type="text" name="search-text" placeholder="Search images..." required>
-      </label>
-      <button type="submit">Search</button>
-    </form>
+    <div class="container">
+      <canvas id="granim-canvas"></canvas>
+      <form class="form">
+        <label>
+          <input type="text" name="search-text" placeholder="Search images..." required>
+        </label>
+        <button type="submit" class="btn">Search</button>
+      </form>
+      <ul class="gallery"></ul>
+    </div>
   </main>
 </body>
 
