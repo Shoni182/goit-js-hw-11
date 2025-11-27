@@ -28,9 +28,9 @@ form.addEventListener('submit', evt => {
 
   showLoader();
   const formData = new FormData(form);
-  const query = formData.get('search-text');
+  const query = formData.get('search-text').trim();
 
-  if (query.includes(' ')) {
+  if (query === '') {
     hideLoaderLonger();
 
     clearGallery();
