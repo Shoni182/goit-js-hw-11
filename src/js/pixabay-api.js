@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+//: змінна опцій HTTPS запиту
 const server = axios.create({
   baseURL: 'https://pixabay.com/api/',
   params: {
@@ -11,6 +12,7 @@ const server = axios.create({
   },
 });
 
+//: ф-я HTTPS запиту
 export function getImagesByQuery(query) {
   return server.get('', {
     params: {

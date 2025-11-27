@@ -1,5 +1,4 @@
 import './scss/main.scss';
-import Granim from 'granim';
 import iziToast from 'izitoast';
 import { getImagesByQuery } from './js/pixabay-api';
 import {
@@ -7,63 +6,71 @@ import {
   clearGallery,
   showLoader,
   hideLoader,
+  hideLoaderLonger,
+  loadGranim,
 } from './js/render-functions';
 
-let granimInstance = new Granim({
-  element: '#granim-canvas',
-  name: 'granim',
-  opacity: [1, 1],
-  states: {
-    'default-state': {
-      gradients: [
-        ['#834D9B', '#D04ED6'],
-        ['#1CD8D2', '#93EDC7'],
-      ],
-    },
-  },
-});
-
+//: пошук DOM елементів
 const refs = {
   form: document.querySelector('.form'),
 };
 
+//: деструктуризація
 const { form } = refs;
 
+document.addEventListener('DOMContentLoaded', () => {
+  loadGranim();
+});
+
+//: прослуховувач submit
 form.addEventListener('submit', evt => {
   evt.preventDefault();
+
   showLoader();
-
-  window.addEventListener('resize', function () {
-    // Цей метод змушує Granim перерахувати розміри canvas
-    // і оновити градієнт відповідно до нових розмірів.
-    granimInstance.changeSize();
-  });
-
   const formData = new FormData(form);
-  const query = formData.get('search-text').trim();
+  const query = formData.get('search-text');
+
+  if (query.includes(' ')) {
+    hideLoaderLonger();
+
+    clearGallery();
+    form.reset();
+    return iziToast.show({
+      messageSize: '20',
+      message: `Будь ласка введіть назву фото!`,
+      position: 'center',
+      close: true,
+      closeOnEscape: true,
+      theme: 'light',
+      color: 'yellow',
+    });
+  }
 
   clearGallery();
   form.reset();
 
+  //: Проміс
   getImagesByQuery(query)
     .then(res => {
-      const animArr = res.data.hits;
-      if (animArr.length === 0) {
-        return Promise.reject(error);
+      const dataArr = res.data.hits;
+
+      if (dataArr.length === 0) {
+        return Promise.reject();
       }
-      createGallery(animArr);
+      createGallery(dataArr);
+      loadGranim();
       hideLoader();
     })
-    .catch(error => {
-      hideLoader();
+    .catch(() => {
+      hideLoaderLonger();
       iziToast.show({
         messageSize: '20',
-        message: `Sorry, there are no images matching your search query. Please try again!`,
+        message: `На жаль, немає зображень, що відповідають вашому пошуковому запиту. Спробуйте ще раз!`,
         position: 'center',
         close: true,
         closeOnEscape: true,
         theme: 'light',
-        color: 'red',
+        color: 'orange',
       });
     });
 });

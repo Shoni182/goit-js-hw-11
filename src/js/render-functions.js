@@ -1,12 +1,15 @@
 import SimpleLightbox from 'simplelightbox';
-
+import Granim from 'granim';
+//: пошук елементів DOM
 let refs = {
   galleryElem: document.querySelector('.gallery'),
 };
 const { galleryElem } = refs;
 
+//: змінна загрузки
 let loader = null;
 
+//: ф-я темплеуйту розмітки
 function imageTemplate({
   webformatURL,
   largeImageURL,
@@ -34,6 +37,7 @@ function imageTemplate({
       </li>`;
 }
 
+//: ф-я рендеру розмітки
 export function createGallery(images) {
   const markup = images.map(imageTemplate).join('');
   const lightbox = new SimpleLightbox('.gallery a', {
@@ -47,10 +51,12 @@ export function createGallery(images) {
   return markup;
 }
 
+//: ф-я очистки галереї
 export function clearGallery() {
   galleryElem.innerHTML = '';
 }
 
+//: ф-я запуску загрузки
 export function showLoader() {
   if (!loader) {
     const markup = `<div class="loader"></div>`;
@@ -59,9 +65,38 @@ export function showLoader() {
   }
 }
 
+//: ф-я виключення загрузки
 export function hideLoader() {
   if (loader) {
-    loader.remove();
-    loader = null;
+    setTimeout(() => {
+      loader.remove();
+      loader = null;
+    }, 700);
   }
+}
+
+export function hideLoaderLonger() {
+  if (loader) {
+    setTimeout(() => {
+      loader.remove();
+      loader = null;
+    }, 5000);
+  }
+}
+
+export function loadGranim() {
+  let granimInstance = new Granim({
+    element: '#granim-canvas',
+    name: 'granim',
+    opacity: [1, 1],
+    states: {
+      'default-state': {
+        gradients: [
+          ['#834D9B', '#D04ED6'],
+          ['#1CD8D2', '#93EDC7'],
+        ],
+      },
+    },
+  });
+  return;
 }
