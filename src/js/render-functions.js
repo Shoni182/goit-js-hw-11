@@ -3,11 +3,14 @@ import Granim from 'granim';
 //: пошук елементів DOM
 let refs = {
   galleryElem: document.querySelector('.gallery'),
+  loader: document.querySelector('.loader'),
 };
-const { galleryElem } = refs;
+const { galleryElem, loader } = refs;
+
+console.log(loader);
 
 //: змінна загрузки
-let loader = null;
+// let loader = null;
 
 //: ф-я темплеуйту розмітки
 function imageTemplate({
@@ -58,32 +61,29 @@ export function clearGallery() {
 
 //: ф-я запуску загрузки
 export function showLoader() {
-  if (!loader) {
-    const markup = `<div class="loader"></div>`;
-    galleryElem.insertAdjacentHTML('beforebegin', markup);
-    loader = document.querySelector('.loader');
+  if (!loader.classList.contains('isActive')) {
+    loader.classList.add('isActive');
   }
 }
 
 //: ф-я виключення загрузки
 export function hideLoader() {
-  if (loader) {
+  if (loader.classList.contains('isActive')) {
     setTimeout(() => {
-      loader.remove();
-      loader = null;
+      loader.classList.remove('isActive');
     }, 700);
   }
 }
-
+//: ф-я виключення загрузки
 export function hideLoaderLonger() {
-  if (loader) {
+  if (loader.classList.contains('isActive')) {
     setTimeout(() => {
-      loader.remove();
-      loader = null;
+      loader.classList.remove('isActive');
     }, 5000);
   }
 }
 
+//: ф-я стилізації фону
 export function loadGranim() {
   let granimInstance = new Granim({
     element: '#granim-canvas',
