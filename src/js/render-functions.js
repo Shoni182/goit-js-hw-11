@@ -69,17 +69,7 @@ export function showLoader() {
 //: ф-я виключення загрузки
 export function hideLoader() {
   if (loader.classList.contains('isActive')) {
-    setTimeout(() => {
-      loader.classList.remove('isActive');
-    }, 700);
-  }
-}
-//: ф-я виключення загрузки
-export function hideLoaderLonger() {
-  if (loader.classList.contains('isActive')) {
-    setTimeout(() => {
-      loader.classList.remove('isActive');
-    }, 5000);
+    loader.classList.remove('isActive');
   }
 }
 

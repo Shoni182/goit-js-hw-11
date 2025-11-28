@@ -6,7 +6,6 @@ import {
   clearGallery,
   showLoader,
   hideLoader,
-  hideLoaderLonger,
   loadGranim,
 } from './js/render-functions';
 
@@ -18,6 +17,7 @@ const refs = {
 //: деструктуризація
 const { form } = refs;
 
+//: Задні фон
 document.addEventListener('DOMContentLoaded', () => {
   loadGranim();
 });
@@ -26,13 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
 form.addEventListener('submit', evt => {
   evt.preventDefault();
 
-  showLoader();
   const formData = new FormData(form);
   const query = formData.get('search-text').trim();
 
   if (query === '') {
-    hideLoaderLonger();
-
     clearGallery();
     form.reset();
     return iziToast.show({
@@ -46,6 +43,7 @@ form.addEventListener('submit', evt => {
     });
   }
 
+  showLoader();
   clearGallery();
   form.reset();
 
@@ -55,14 +53,14 @@ form.addEventListener('submit', evt => {
       const dataArr = res.data.hits;
 
       if (dataArr.length === 0) {
+        hideLoader();
         return Promise.reject();
       }
+
       createGallery(dataArr);
-      loadGranim();
       hideLoader();
     })
     .catch(() => {
-      hideLoaderLonger();
       iziToast.show({
         messageSize: '20',
         message: `На жаль, немає зображень, що відповідають вашому пошуковому запиту. Спробуйте ще раз!`,
