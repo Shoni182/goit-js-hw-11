@@ -29,24 +29,32 @@ function imageTemplate({
           <img src="${webformatURL}" alt="${tagsText}" class="item-img">
           </a>
           <div class="desc-container">
-            <p class="item-title">Likes <span item-num>${likes}</span></p>
-            <p class="item-title">Views <span item-num>${views}</span></p>
-            <p class="item-title">Comments <span item-num>${comments}</span></p>
-            <p class="item-title">Downloads <span item-num>${downloads}</span></p>
+            <p class="item-title">Likes <span class="item-number">${likes}</span></p>
+            <p class="item-title">Views <span class="item-number">${views}</span></p>
+            <p class="item-title">Comments <span class="item-number">${comments}</span></p>
+            <p class="item-title">Downloads <span class="item-number">${downloads}</span></p>
           </div>
         </div>
       </li>`;
 }
 
+//: б-ка галереї
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+  overlayOpacity: 0.85,
+});
+
 //: ф-я рендеру розмітки
 export function createGallery(images) {
   const markup = images.map(imageTemplate).join('');
-  const lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionDelay: 250,
-    overlayOpacity: 0.85,
-  });
+  // const lightbox = new SimpleLightbox('.gallery a', {
+  //   captionsData: 'alt',
+  //   captionPosition: 'bottom',
+  //   captionDelay: 250,
+  //   overlayOpacity: 0.85,
+  // });
   galleryElem.innerHTML = markup;
   lightbox.refresh();
   return markup;
