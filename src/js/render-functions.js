@@ -7,8 +7,6 @@ let refs = {
 };
 const { galleryElem, loader } = refs;
 
-console.log(loader);
-
 //: змінна загрузки
 // let loader = null;
 

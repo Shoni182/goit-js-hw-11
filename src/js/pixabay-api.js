@@ -14,9 +14,11 @@ const server = axios.create({
 
 //: ф-я HTTPS запиту
 export function getImagesByQuery(query) {
-  return server.get('', {
-    params: {
-      q: query,
-    },
-  });
+  return server
+    .get('', {
+      params: {
+        q: query,
+      },
+    })
+    .then(res => res.data.hits);
 }

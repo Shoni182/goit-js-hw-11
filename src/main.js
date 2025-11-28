@@ -49,15 +49,13 @@ form.addEventListener('submit', evt => {
 
   //: Проміс
   getImagesByQuery(query)
-    .then(res => {
-      const dataArr = res.data.hits;
-
-      if (dataArr.length === 0) {
+    .then(response => {
+      if (response.length === 0) {
         hideLoader();
         return Promise.reject();
       }
 
-      createGallery(dataArr);
+      createGallery(response);
       hideLoader();
     })
     .catch(() => {
